@@ -1,38 +1,79 @@
 # get the dotfiles repo directory
-DOTFILES="$(dirname "$(dirname "$(readlink ~/.zshrc)")")"
-ZSHFILES="$DOTFILES/zsh"
+# DOTFILES="$(dirname "$(dirname "$(readlink ~/.zshrc)")")"
+export DOTFILES=$HOME/.dotfiles
+export ZSHFILES="$DOTFILES/zsh"
 
 # configure oh-my-zsh
-ZSH=$HOME/.oh-my-zsh
-ZSH_THEME="agnork"
-DISABLE_AUTO_UPDATE="true"
-DISABLE_CORRECTION="true"
-COMPLETION_WAITING_DOTS="true"
+# ZSH=$HOME/.oh-my-zsh
+# ZSH_THEME="agnork"
+# DISABLE_AUTO_UPDATE="true"
+# DISABLE_CORRECTION="true"
+# COMPLETION_WAITING_DOTS="true"
 
 # load oh-my-zsh
-source $ZSH/oh-my-zsh.sh
+# source $ZSH/oh-my-zsh.sh
 
 # OS-specific configuration
-[[ $(uname -s) == 'Linux' ]] && source $ZSHFILES/config.ubuntu
-[[ $(uname -s) == 'Darwin' ]] && source $ZSHFILES/config.osx
-[[ $(uname -s) == MINGW32_* ]] && source $ZSHFILES/config.win32
+# [[ $(uname -s) == 'Linux' ]] && source $ZSHFILES/config.ubuntu.zsh
+# [[ $(uname -s) == 'Darwin' ]] && source $ZSHFILES/config.osx
+# [[ $(uname -s) == MINGW32_* ]] && source $ZSHFILES/config.win32
 
 # customize path
 export PATH=/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/heroku/bin:$HOME/Library/Android/sdk/platform-tools:$PATH
 export PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig
 
+# Stash your environment variables in ~/.localrc. This means they'll stay out
+# of your main dotfiles repository (which may be public, like this one), but
+# you'll have access to them in your scripts.
+if [[ -a ~/.localrc ]]
+then
+  source ~/.localrc
+fi
+
+# all of our zsh files
+typeset -U config_files
+config_files=($DOTFILES/zsh/**/*.zsh)
+
+# load the path files
+for file in ${(M)config_files:#*/path.zsh}
+do
+  source $file
+done
+
+# load everything but the path and completion files
+for file in ${${config_files:#*/path.zsh}:#*/completion.zsh}
+do
+  source $file
+done
+
+
+# initialize autocomplete here, otherwise functions won't be loaded
+autoload -U compinit
+compinit -u
+
+# load every completion after autocomplete loads
+for file in ${(M)config_files:#*/completion.zsh}
+do
+  source $file
+done
+
+unset config_files
+
+
 # set default editor
-export EDITOR="subl -w"
+export EDITOR="atom"
 
 # global packer cache
-export PACKER_CACHE_DIR="$HOME/packer_cache"
+# export PACKER_CACHE_DIR="$HOME/packer_cache"
 
 # node version manager
-[ -s $HOME/.nvm/nvm.sh ] && . $HOME/.nvm/nvm.sh
+# [ -s $HOME/.nvm/nvm.sh ] && . $HOME/.nvm/nvm.sh
 
-source $ZSHFILES/completion
-source $ZSHFILES/aliases
+# source $ZSHFILES/completion
+# source $ZSHFILES/aliases
+# source $ZSHFILES/../git/aliases.zsh
+
 
 # machine-specific configuration
-source ~/.zshrc.user
-[[ -s "$HOME/.avn/bin/avn.sh" ]] && source "$HOME/.avn/bin/avn.sh" # load avn
+# source ~/.zshrc.user
+# [[ -s "$HOME/.avn/bin/avn.sh" ]] && source "$HOME/.avn/bin/avn.sh" # load avn

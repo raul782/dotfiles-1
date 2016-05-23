@@ -6,9 +6,11 @@ todo () {
   IFS="$IFS_OLD"
 }
 
+alias reload!='. ~/.zshrc'
+
 # convenience alias
 alias zshconfig="$EDITOR ~/.zshrc"
-alias dotconfig="$EDITOR ~/.zshrc.user"
+alias dotconfig="$EDITOR ~/.dotfiles/ubuntu.zsh"
 
 alias dotfiles="open $DOTFILES"
 
@@ -21,6 +23,6 @@ alias ~="cd ~" # `cd` is probably faster to type though
 alias -- -="cd -"
 
 # OS-specific configuration
-[[ $(uname -s) == 'Linux' ]] && source $ZSHFILES/aliases.ubuntu
-[[ $(uname -s) == 'Darwin' ]] && source $ZSHFILES/aliases.osx
-[[ $(uname -s) == MINGW32_* ]] && source $ZSHFILES/aliases.win32
+[[ $(uname -s) == 'Linux' ]] && source $ZSHFILES/aliases.ubuntu.zsh
+[[ $(uname -s) == 'Darwin' ]] && source $ZSHFILES/aliases.osx.zsh
+[[ $(uname -s) == MINGW32_* ]] && source $ZSHFILES/aliases.win32.zsh

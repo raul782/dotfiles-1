@@ -7,8 +7,8 @@ curl https://raw.github.com/creationix/nvm/master/install.sh | sh
 source ~/.zshrc
 
 # node
-nvm install 0.10.23
-nvm alias default 0.10.23
+nvm install 6
+nvm alias default 6
 
 # refresh configuration
 source ~/.zshrc

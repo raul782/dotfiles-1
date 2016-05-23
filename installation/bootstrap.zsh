@@ -1,9 +1,9 @@
 #!/bin/zsh
 
 # configuration
-DEFAULT_NAME="Nicolas Bevacqua"
-DEFAULT_EMAIL="nicolasbevacqua@gmail.com"
-DEFAULT_WEBSITE="http://bevacqua.io"
+DEFAULT_NAME="Raul Rodriguez"
+DEFAULT_EMAIL="raulrodriguez782@gmail.com"
+DEFAULT_WEBSITE="http://www.dev4media.pe"
 
 read -p "Name ($DEFAULT_NAME): " NAME
 NAME=${NAME:-$DEFAULT_NAME}

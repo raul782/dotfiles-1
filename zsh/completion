@@ -1,5 +1,0 @@
-# npm completion
-eval "$(npm completion)"
-
-# git-flow completion
-source $ZSHFILES/git-flow-completion.zsh
